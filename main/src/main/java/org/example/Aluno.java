@@ -1,4 +1,4 @@
 package org.example;
 
-public class Aluno {
+public class Aluno extends MembroInstitucional{
 }
