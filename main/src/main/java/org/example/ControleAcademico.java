@@ -50,7 +50,7 @@ public class ControleAcademico {
         disc.setProfessor(prof);
     }
 
-    private Professor procurarProfessor(String nomeProfessor) throws ProfessorNotFound {
+    public Professor procurarProfessor(String nomeProfessor) throws ProfessorNotFound {
 
         for (Professor professor : professores) {
             if (professor.getNome().equals(nomeProfessor)) {
@@ -60,7 +60,7 @@ public class ControleAcademico {
         throw new ProfessorNotFound("Professor " + nomeProfessor + " nao encontrado.");
     }
 
-    private Disciplina procurarDisciplina(String nomeDisciplina) throws DisciplinaNotFound {
+    public Disciplina procurarDisciplina(String nomeDisciplina) throws DisciplinaNotFound {
 
         for (Disciplina disciplina : disciplinas) {
             if (disciplina.getNome().equals(nomeDisciplina)) {
@@ -70,7 +70,7 @@ public class ControleAcademico {
         throw new DisciplinaNotFound("Disciplina " + nomeDisciplina + " nao encontrado.");
     }
 
-    private Aluno procurarAluno(String nomeAluno) throws AlunoNotFound {
+    public Aluno procurarAluno(String nomeAluno) throws AlunoNotFound {
 
         for (Aluno aluno : alunos) {
             if (aluno.getNome().equals(nomeAluno)) {

@@ -25,74 +25,18 @@ public class Main {
         matricularAlunos(controleAcademico);
         construirHorariosDosMembros(controleAcademico);
 
-        System.out.println("\nDisciplinas dos Professores:");
+        ConsolePrinter printer = new ConsolePrinter(controleAcademico);
 
-        for (Professor prof : controleAcademico.getProfessores()) {
-            System.out.println(prof.getNome());
-
-            for (Disciplina dis : prof.getDisciplinas()) {
-                System.out.print(dis.getNome() + " ");
-            }
-            System.out.println();
+        try {
+            printer.printDisciplinasDosProfessores("Sabrina","Daniel");
+            printer.printHorariosDosProfessores("Daniel");
+            printer.printAlunosDasDisciplinas("ATAL","BD");
+            printer.printDisciplinasDosAlunos("Maria","Matheus");
+            printer.printHorariosDosAlunos("Joseph","Maria");
+            printer.printNumeroAlunosDasDisciplinas("MAP","BD");
         }
-
-        System.out.println("\nHorarios dos professores:");
-        for (Professor prof : controleAcademico.getProfessores()) {
-            System.out.println(prof.getNome());
-
-            Horario horario = prof.getHorario();
-            for (String[] dia : horario.getMatrizHorario()) {
-                for (String hora : dia) {
-                    System.out.print(hora + " ");
-                }
-                System.out.println();
-            }
-            System.out.println();
-        }
-
-        System.out.println("\nAlunos das Disiciplinas:");
-        for (Disciplina disc : controleAcademico.getDisciplinas()) {
-            System.out.println(disc.getNome());
-
-            for (Aluno aluno : disc.getAlunos()) {
-                System.out.print(aluno.getNome() + " ");
-            }
-            System.out.println();
-        }
-
-        System.out.println("\nDisciplinas do Aluno:");
-        for (Aluno aluno : controleAcademico.getAlunos()) {
-            System.out.println(aluno.getNome());
-
-            for (Disciplina disc : aluno.getDisciplinas()) {
-                System.out.print(disc.getNome() + " ");
-            }
-            System.out.println();
-        }
-
-        System.out.println("\nHorarios do Aluno:");
-        for (Aluno aluno : controleAcademico.getAlunos()) {
-            System.out.println(aluno.getNome());
-
-            Horario horario = aluno.getHorario();
-
-            for (String[] dia : horario.getMatrizHorario()) {
-                for (String hora : dia) {
-                    System.out.print(hora + " ");
-                }
-                System.out.println();
-            }
-            System.out.println();
-        }
-
-        System.out.println("\nAlunos das Disciplinas:");
-        for (Disciplina disc : controleAcademico.getDisciplinas()) {
-            System.out.println(disc.getNome());
-
-            for (Aluno aluno : disc.getAlunos()) {
-                System.out.print(aluno.getNome() + " ");
-            }
-            System.out.println();
+        catch (ProfessorNotFound | DisciplinaNotFound | AlunoNotFound e) {
+            System.out.println(e.getMessage());
         }
     }
 
