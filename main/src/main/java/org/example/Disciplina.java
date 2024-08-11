@@ -8,20 +8,12 @@ public class Disciplina {
     private ArrayList<Aluno> alunos;
     private Professor professor;
 
-    void alocarAluno(Aluno aluno){
-
-    }
-
-    void alocarProfessor(Professor prof){
-
+    public Disciplina(String nome) {
+        this.nome = nome;
     }
 
     public String getNome() {
         return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
     }
 
     public Horario getHorario() {
@@ -36,8 +28,8 @@ public class Disciplina {
         return alunos;
     }
 
-    public void setAlunos(ArrayList<Aluno> alunos) {
-        this.alunos = alunos;
+    public void addAluno(Aluno aluno) {
+        alunos.add(aluno);
     }
 
     public Professor getProfessor() {
