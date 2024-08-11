@@ -11,20 +11,24 @@ public class MembroInstitucional {
 
     public MembroInstitucional(String nome) {
         this.nome = nome;
+        this.disciplinas = new ArrayList<>();
     }
 
     void construirHorario() {
 
-        String[][] construtorDoHorario = new String[5][7];
+        String[][] construtorDoHorario = new String[7][5];
 
         // fazendo um "or" em todas os horarios das disciplinas
         for (Disciplina disc : disciplinas) {
             Horario horarioDaDisc = disc.getHorario();
 
-            for (int i = 0; i < 5; i++) {
-                for (int j = 0; j < 7; j++) {
+            for (int i = 0; i < 7; i++) {
+                for (int j = 0; j < 5; j++) {
                     if (Objects.equals(horarioDaDisc.getMatrizHorario()[i][j], "T") | Objects.equals(construtorDoHorario[i][j], "T")) {
                         construtorDoHorario[i][j] = "T";
+                    }
+                    else {
+                        construtorDoHorario[i][j] = "F";
                     }
                 }
             }

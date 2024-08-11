@@ -11,6 +11,12 @@ public class ControleAcademico {
     ArrayList<Professor> professores;
     ArrayList<Disciplina> disciplinas;
 
+    public ControleAcademico() {
+        alunos = new ArrayList<>();
+        professores = new ArrayList<>();
+        disciplinas = new ArrayList<>();
+    }
+
     public void adicionarAluno(String nomeAluno){
         alunos.add(new Aluno(nomeAluno));
     }
@@ -79,5 +85,8 @@ public class ControleAcademico {
     }
     public ArrayList<Professor> getProfessores() {
         return professores;
+    }
+    public ArrayList<Disciplina> getDisciplinas() {
+        return disciplinas;
     }
 }

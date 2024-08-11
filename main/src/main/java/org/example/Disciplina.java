@@ -10,6 +10,7 @@ public class Disciplina {
 
     public Disciplina(String nome) {
         this.nome = nome;
+        this.alunos = new ArrayList<>();
     }
 
     public String getNome() {
