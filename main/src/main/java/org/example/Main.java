@@ -57,7 +57,7 @@ public class Main {
 
         // adicionando disciplinas ao controle
         for (int i = 0; i < disciplinas.length; i++) {
-            controleAcademico.adicionarDisciplina(new Disciplina(disciplinas[i]), new Horario(horarios[i]));
+            controleAcademico.adicionarDisciplina(new Disciplina(disciplinas[i]), new Horario(horarios[i], disciplinas[i]));
         }
     }
 

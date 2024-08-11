@@ -4,7 +4,7 @@ public class Horario {
 
     private String[][] matrizHorario;
 
-    public Horario(String horario) {
+    public Horario(String horario, String disciplina) {
 
         String[][] matrizTemp = new String[5][7];
         matrizHorario = new String[7][5];
@@ -18,6 +18,9 @@ public class Horario {
         // transpondo a matriz
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 7; j++) {
+                if(matrizTemp[i][j].equals("T")){
+                    matrizTemp[i][j] = disciplina;
+                }
                 matrizHorario[j][i] = matrizTemp[i][j];
             }
         }

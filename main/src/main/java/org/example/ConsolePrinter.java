@@ -63,17 +63,41 @@ public class ConsolePrinter {
 
         System.out.println("\nHorarios dos professores:");
 
+        String[] hr = {"7:00","9:00","11:00","14:00","16:00","18:00","20:00"};
+        String[] diasSemana = {"Seg", "Ter", "Qua", "Qui", "Sex"};
+
         Professor prof;
         for (String nome : nomes) {
             prof = controleAcademico.procurarProfessor(nome);
 
+            int i = 0;
             System.out.println(prof.getNome());
             Horario horario = prof.getHorario();
+
+            System.out.println("      Seg Ter Qua Qui Sex");
+
             for (String[] dia : horario.getMatrizHorario()) {
+                if(hr[i].length() < 5)
+                    System.out.print(hr[i] + "  ");
+                else
+                    System.out.print(hr[i] + " ");
+
+                int spacing = 4;
                 for (String hora : dia) {
-                    System.out.print(hora + " ");
+                    if(hora.length() > spacing){
+                        spacing = hora.length();
+                    }
                 }
+
+                for (String hora : dia) {
+                    System.out.print(hora);
+                    for(int m = 0; m < spacing-hora.length(); m++){
+                        System.out.print(" ");
+                    }
+                }
+
                 System.out.println();
+                i++;
             }
             System.out.println();
         }
@@ -158,17 +182,39 @@ public class ConsolePrinter {
 
         System.out.println("\nHorarios do Aluno:");
 
+        String[] hr = {"7:00","9:00","11:00","14:00","16:00","18:00","20:00"};
         Aluno aluno;
         for (String nome : nomes) {
             aluno = controleAcademico.procurarAluno(nome);
 
+            int i = 0;
             System.out.println(aluno.getNome());
             Horario horario = aluno.getHorario();
+
+            System.out.println("      Seg Ter Qua Qui Sex");
+
             for (String[] dia : horario.getMatrizHorario()) {
+                if(hr[i].length() < 5)
+                    System.out.print(hr[i] + "  ");
+                else
+                    System.out.print(hr[i] + " ");
+
+                int spacing = 4;
                 for (String hora : dia) {
-                    System.out.print(hora + " ");
+                    if(hora.length() > spacing){
+                        spacing = hora.length();
+                    }
                 }
+
+                for (String hora : dia) {
+                    System.out.print(hora);
+                    for(int m = 0; m < spacing-hora.length(); m++){
+                        System.out.print(" ");
+                    }
+                }
+
                 System.out.println();
+                i++;
             }
             System.out.println();
         }
