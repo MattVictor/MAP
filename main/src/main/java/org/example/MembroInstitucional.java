@@ -14,7 +14,7 @@ public class MembroInstitucional {
         this.disciplinas = new ArrayList<>();
     }
 
-    void construirHorario() {
+    public void construirHorario() {
 
         String[][] construtorDoHorario = new String[7][5];
 
