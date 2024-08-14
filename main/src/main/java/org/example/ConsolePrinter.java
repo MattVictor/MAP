@@ -64,7 +64,6 @@ public class ConsolePrinter {
         System.out.println("\nHorarios dos professores:");
 
         String[] hr = {"7:00","9:00","11:00","14:00","16:00","18:00","20:00"};
-        String[] diasSemana = {"Seg", "Ter", "Qua", "Qui", "Sex"};
 
         Professor prof;
         for (String nome : nomes) {

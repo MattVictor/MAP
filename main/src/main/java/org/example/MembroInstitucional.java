@@ -6,15 +6,13 @@ import java.util.Objects;
 public class MembroInstitucional {
 
     private String nome;
-    private ArrayList<Disciplina> disciplinas;
     private Horario horario;
 
     public MembroInstitucional(String nome) {
         this.nome = nome;
-        this.disciplinas = new ArrayList<>();
     }
 
-    public void construirHorario() {
+    public void construirHorario(ArrayList<Disciplina> disciplinas) {
 
         String[][] construtorDoHorario = new String[7][5];
 
@@ -28,21 +26,13 @@ public class MembroInstitucional {
                         construtorDoHorario[i][j] = disc.getNome();
                     }
                     else {
-                        construtorDoHorario[i][j] = "F";
+                        construtorDoHorario[i][j] = "-";
                     }
                 }
             }
         }
 
         horario = new Horario(construtorDoHorario);
-    }
-
-    public ArrayList<Disciplina> getDisciplinas() {
-        return disciplinas;
-    }
-
-    public void addDisciplina(Disciplina disciplina) {
-        disciplinas.add(disciplina);
     }
 
     public String getNome() {
