@@ -10,11 +10,15 @@ public class ControleAcademico {
     ArrayList<Aluno> alunos;
     ArrayList<Professor> professores;
     ArrayList<Disciplina> disciplinas;
+    ArrayList<AlunoDisciplina> RelacaoAlunoDisciplina;
+    ArrayList<ProfessorDisciplina> RelacaoProfessorDisciplina;
 
     public ControleAcademico() {
         alunos = new ArrayList<>();
         professores = new ArrayList<>();
         disciplinas = new ArrayList<>();
+        RelacaoAlunoDisciplina = new ArrayList<>();
+        RelacaoProfessorDisciplina = new ArrayList<>();
     }
 
     public void adicionarAluno(String nomeAluno){
@@ -35,8 +39,7 @@ public class ControleAcademico {
         Disciplina disc = procurarDisciplina(nomeDisciplina);
 
         // relacionar aluno e disciplina
-        aluno.addDisciplina(disc);
-        disc.addAluno(aluno);
+        RelacaoAlunoDisciplina.add(new AlunoDisciplina(aluno,disc));
     }
 
     public void alocarProfessor(String nomeProfessor, String nomeDisciplina) throws ProfessorNotFound, DisciplinaNotFound {
@@ -46,8 +49,7 @@ public class ControleAcademico {
         Disciplina disc = procurarDisciplina(nomeDisciplina);
 
         // relacionar professor e disciplina
-        prof.addDisciplina(disc);
-        disc.setProfessor(prof);
+        RelacaoProfessorDisciplina.add(new ProfessorDisciplina(prof,disc));
     }
 
     public Professor procurarProfessor(String nomeProfessor) throws ProfessorNotFound {
@@ -80,6 +82,48 @@ public class ControleAcademico {
         throw new AlunoNotFound("Aluno " + nomeAluno + " nao encontrado.");
     }
 
+    public ArrayList<Disciplina> getDisciplinasDoAluno(String nomeAluno) throws AlunoNotFound {
+
+        Aluno aluno = procurarAluno(nomeAluno);
+        ArrayList<Disciplina> disciplinas = new ArrayList<>();
+
+        for (AlunoDisciplina alunoDisc : RelacaoAlunoDisciplina) {
+            if (aluno.equals(alunoDisc.getAluno())) {
+                disciplinas.add(alunoDisc.getDisciplina());
+            }
+        }
+
+        return disciplinas;
+    }
+
+    public ArrayList<Disciplina> getDisciplinasDoProfessor(String nomeProfessor) throws ProfessorNotFound {
+
+        Professor professor = procurarProfessor(nomeProfessor);
+        ArrayList<Disciplina> disciplinas = new ArrayList<>();
+
+        for (ProfessorDisciplina profDisc : RelacaoProfessorDisciplina) {
+            if (professor.equals(profDisc.getAluno())) {
+                disciplinas.add(profDisc.getDisciplina());
+            }
+        }
+
+        return disciplinas;
+    }
+
+    public ArrayList<Aluno> getAlunosDaDisciplina(String nomeDisciplina) throws DisciplinaNotFound {
+
+        Disciplina disciplina = procurarDisciplina(nomeDisciplina);
+        ArrayList<Aluno> alunos = new ArrayList<>();
+
+        for (AlunoDisciplina alunoDisc : RelacaoAlunoDisciplina) {
+            if (disciplina.equals(alunoDisc.getDisciplina())) {
+                alunos.add(alunoDisc.getAluno());
+            }
+        }
+
+        return alunos;
+    }
+
     public ArrayList<Aluno> getAlunos() {
         return alunos;
     }
@@ -88,5 +132,13 @@ public class ControleAcademico {
     }
     public ArrayList<Disciplina> getDisciplinas() {
         return disciplinas;
+    }
+
+    public ArrayList<AlunoDisciplina> getRelacaoAlunoDisciplina() {
+        return RelacaoAlunoDisciplina;
+    }
+
+    public ArrayList<ProfessorDisciplina> getRelacaoProfessorDisciplina() {
+        return RelacaoProfessorDisciplina;
     }
 }

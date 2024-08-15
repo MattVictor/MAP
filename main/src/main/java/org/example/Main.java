@@ -95,11 +95,13 @@ public class Main {
     private static void construirHorariosDosMembros(ControleAcademico controleAcademico) {
 
         // construindo horarios baseado nas disciplinas
-        for (Aluno aluno : controleAcademico.getAlunos()) {
-            aluno.construirHorario();
+        for (AlunoDisciplina alnDisc : controleAcademico.getRelacaoAlunoDisciplina()) {
+            alnDisc.construirHorario();
+            alnDisc.acrescentarHorario();
         }
-        for (Professor professor : controleAcademico.getProfessores()) {
-            professor.construirHorario();
+        for (ProfessorDisciplina profDisc : controleAcademico.getRelacaoProfessorDisciplina()) {
+            profDisc.construirHorario();
+            profDisc.acrescentarHorario();
         }
     }
 }

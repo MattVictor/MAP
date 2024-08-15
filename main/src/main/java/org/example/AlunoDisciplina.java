@@ -1,10 +1,12 @@
 package org.example;
 
-import java.util.ArrayList;
-
-public class AlunoDisciplina {
+public class AlunoDisciplina extends MembroDisciplina {
     private Aluno aluno;
-    private Disciplina disciplina;
+
+    public AlunoDisciplina(Aluno aluno, Disciplina disciplina) {
+        super(disciplina);
+        this.aluno = aluno;
+    }
 
     public Aluno getAluno() {
         return aluno;
@@ -14,11 +16,7 @@ public class AlunoDisciplina {
         this.aluno = aluno;
     }
 
-    public Disciplina getDisciplina() {
-        return disciplina;
-    }
-
-    public void setDisciplina(Disciplina disciplina) {
-        this.disciplina = disciplina;
+    public void acrescentarHorario() {
+        aluno.setHorario(construirHorario());
     }
 }

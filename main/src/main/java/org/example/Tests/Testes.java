@@ -1,5 +1,8 @@
 package org.example.Tests;
 import org.example.*;
+import org.example.Exceptions.AlunoNotFound;
+import org.example.Exceptions.DisciplinaNotFound;
+import org.example.Exceptions.ProfessorNotFound;
 import org.junit.*;
 
 public class Testes extends TesteSetup {
@@ -10,52 +13,48 @@ public class Testes extends TesteSetup {
     }
 
     @Test
-    public void testarHorarioDoAluno() {
+    public void testarHorarioDoAluno() throws AlunoNotFound {
 
-        Aluno aluno = controleAcademico.getAlunos().get(0);
-        Disciplina disciplina = aluno.getDisciplinas().get(0);
+        Aluno aluno = controleAcademico.getAlunos().getFirst();
+        Disciplina disciplina = controleAcademico.getDisciplinasDoAluno(aluno.getNome()).getFirst(); // pode dar NotFound
 
         Horario horarioDaDisc = disciplina.getHorario();
         Horario horarioDoAluno = aluno.getHorario();
 
-        String[][] matrizDoHorarioDaDisc = horarioDaDisc.getMatrizHorario();
-        String[][] matrizDoHorarioDoAluno = horarioDoAluno.getMatrizHorario();
-
-        for (int i = 0; i < matrizDoHorarioDoAluno.length; i++) {
-            for (int j = 0; j < matrizDoHorarioDoAluno[0].length; j++) {
-                if (matrizDoHorarioDaDisc[i][j].equals("T")) {
-                    Assert.assertEquals(matrizDoHorarioDoAluno[j][i], disciplina.getNome());
-                }
-            }
-        }
+        verificarIgualdadeDosHorarios(horarioDoAluno, horarioDaDisc, disciplina.getNome());
     }
 
     @Test
-    public void testarHorarioDosProfessores() {
+    public void testarHorarioDosProfessores() throws ProfessorNotFound {
 
-        Professor professor = controleAcademico.getProfessores().get(0);
-        Disciplina disciplina = professor.getDisciplinas().get(0);
+        Professor professor = controleAcademico.getProfessores().getFirst();
+        Disciplina disciplina = controleAcademico.getDisciplinasDoProfessor(professor.getNome()).getFirst();
 
         Horario horarioDaDisc = disciplina.getHorario();
         Horario horarioDoProfessor = professor.getHorario();
 
-        String[][] matrizDoHorarioDaDisc = horarioDaDisc.getMatrizHorario();
-        String[][] matrizDoHorarioDoProfessor = horarioDoProfessor.getMatrizHorario();
+        verificarIgualdadeDosHorarios(horarioDoProfessor, horarioDaDisc, disciplina.getNome());
+    }
 
-        for (int i = 0; i < matrizDoHorarioDoProfessor.length; i++) {
-            for (int j = 0; j < matrizDoHorarioDoProfessor[0].length; j++) {
+    private void verificarIgualdadeDosHorarios(Horario horarioDoMembro, Horario horarioDaDisciplina, String nomeDaDisciplina) {
+
+        String[][] matrizDoHorarioDaDisc = horarioDaDisciplina.getMatrizHorario();
+        String[][] matrizDoHorarioDoMembro = horarioDoMembro.getMatrizHorario();
+
+        for (int i = 0; i < matrizDoHorarioDoMembro.length; i++) {
+            for (int j = 0; j < matrizDoHorarioDoMembro[0].length; j++) {
                 if (matrizDoHorarioDaDisc[i][j].equals("T")) {
-                    Assert.assertEquals(matrizDoHorarioDoProfessor[j][i], disciplina.getNome());
+                    Assert.assertEquals(matrizDoHorarioDoMembro[j][i], nomeDaDisciplina);
                 }
             }
         }
     }
 
     @Test
-    public void testarQuantidadeDeAlunos() {
+    public void testarQuantidadeDeAlunosDaDisciplina() throws DisciplinaNotFound {
 
-        Disciplina disciplina = controleAcademico.getDisciplinas().get(0);
+        Disciplina disciplina = controleAcademico.getDisciplinas().getFirst();
 
-        Assert.assertEquals(4, disciplina.getAlunos().size());
+        Assert.assertEquals(4, controleAcademico.getAlunosDaDisciplina(disciplina.getNome()).size());
     }
 }

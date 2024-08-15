@@ -1,8 +1,12 @@
 package org.example;
 
-public class ProfessorDisciplina {
+public class ProfessorDisciplina extends MembroDisciplina {
     private Professor professor;
-    private Disciplina disciplina;
+
+    public ProfessorDisciplina(Professor professor, Disciplina disciplina) {
+        super(disciplina);
+        this.professor = professor;
+    }
 
     public Professor getAluno() {
         return professor;
@@ -12,11 +16,7 @@ public class ProfessorDisciplina {
         this.professor = professor;
     }
 
-    public Disciplina getDisciplina() {
-        return disciplina;
-    }
-
-    public void setDisciplina(Disciplina disciplina) {
-        this.disciplina = disciplina;
+    public void acrescentarHorario() {
+        professor.setHorario(construirHorario());
     }
 }

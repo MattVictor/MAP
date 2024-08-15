@@ -4,6 +4,8 @@ import org.example.Exceptions.AlunoNotFound;
 import org.example.Exceptions.DisciplinaNotFound;
 import org.example.Exceptions.ProfessorNotFound;
 
+import java.util.ArrayList;
+
 public class ConsolePrinter {
 
     ControleAcademico controleAcademico;
@@ -12,14 +14,16 @@ public class ConsolePrinter {
         this.controleAcademico = controleAcademico;
     }
 
-    public void printDisciplinasDosProfessores() {
+    public void printDisciplinasDosProfessores() throws ProfessorNotFound {
 
         System.out.println("\nDisciplinas dos Professores:");
 
         for (Professor prof : controleAcademico.getProfessores()) {
             System.out.println(prof.getNome());
 
-            for (Disciplina dis : prof.getDisciplinas()) {
+            ArrayList<Disciplina> disciplinasDoProf = controleAcademico.getDisciplinasDoProfessor(prof.getNome());
+
+            for (Disciplina dis : disciplinasDoProf) {
                 System.out.print(dis.getNome() + " ");
             }
             System.out.println();
@@ -34,8 +38,10 @@ public class ConsolePrinter {
         for (String nome : nomes) {
             prof = controleAcademico.procurarProfessor(nome);
 
+            ArrayList<Disciplina> disciplinasDoProf = controleAcademico.getDisciplinasDoProfessor(prof.getNome());
+
             System.out.println(prof.getNome());
-            for (Disciplina dis : prof.getDisciplinas()) {
+            for (Disciplina dis : disciplinasDoProf) {
                 System.out.print(dis.getNome() + " ");
             }
             System.out.println();
@@ -49,13 +55,7 @@ public class ConsolePrinter {
             System.out.println(prof.getNome());
 
             Horario horario = prof.getHorario();
-            for (String[] dia : horario.getMatrizHorario()) {
-                for (String hora : dia) {
-                    System.out.print(hora + " ");
-                }
-                System.out.println();
-            }
-            System.out.println();
+            printHorario(horario);
         }
     }
 
@@ -102,13 +102,15 @@ public class ConsolePrinter {
         }
     }
 
-    public void printAlunosDasDisciplinas() {
+    public void printAlunosDasDisciplinas() throws DisciplinaNotFound {
 
         System.out.println("\nAlunos das Disiciplinas:");
         for (Disciplina disc : controleAcademico.getDisciplinas()) {
             System.out.println(disc.getNome());
 
-            for (Aluno aluno : disc.getAlunos()) {
+            ArrayList<Aluno> alunosDaDisc = controleAcademico.getAlunosDaDisciplina(disc.getNome());
+
+            for (Aluno aluno : alunosDaDisc) {
                 System.out.print(aluno.getNome() + " ");
             }
             System.out.println();
@@ -123,21 +125,25 @@ public class ConsolePrinter {
         for (String nome : nomes) {
             disc = controleAcademico.procurarDisciplina(nome);
 
+            ArrayList<Aluno> alunosDaDisc = controleAcademico.getAlunosDaDisciplina(disc.getNome());
+
             System.out.println(disc.getNome());
-            for (Aluno aluno : disc.getAlunos()) {
+            for (Aluno aluno : alunosDaDisc) {
                 System.out.print(aluno.getNome() + " ");
             }
             System.out.println();
         }
     }
 
-    public void printDisciplinasDosAlunos() {
+    public void printDisciplinasDosAlunos() throws AlunoNotFound {
 
         System.out.println("\nDisciplinas do Aluno:");
         for (Aluno aluno : controleAcademico.getAlunos()) {
             System.out.println(aluno.getNome());
 
-            for (Disciplina disc : aluno.getDisciplinas()) {
+            ArrayList<Disciplina> disciplinasDoAluno = controleAcademico.getDisciplinasDoAluno(aluno.getNome());
+
+            for (Disciplina disc : disciplinasDoAluno) {
                 System.out.print(disc.getNome() + " ");
             }
             System.out.println();
@@ -152,8 +158,10 @@ public class ConsolePrinter {
         for (String nome : nomes) {
             aluno = controleAcademico.procurarAluno(nome);
 
+            ArrayList<Disciplina> disciplinasDoAluno = controleAcademico.getDisciplinasDoAluno(aluno.getNome());
+
             System.out.println(aluno.getNome());
-            for (Disciplina disc : aluno.getDisciplinas()) {
+            for (Disciplina disc : disciplinasDoAluno) {
                 System.out.print(disc.getNome() + " ");
             }
             System.out.println();
@@ -167,14 +175,19 @@ public class ConsolePrinter {
             System.out.println(aluno.getNome());
 
             Horario horario = aluno.getHorario();
-            for (String[] dia : horario.getMatrizHorario()) {
-                for (String hora : dia) {
-                    System.out.print(hora + " ");
-                }
-                System.out.println();
+            printHorario(horario);
+        }
+    }
+
+    private void printHorario(Horario horario) {
+
+        for (String[] dia : horario.getMatrizHorario()) {
+            for (String hora : dia) {
+                System.out.print(hora + " ");
             }
             System.out.println();
         }
+        System.out.println();
     }
 
     public void printHorariosDosAlunos(String... nomes) throws AlunoNotFound {
@@ -219,12 +232,13 @@ public class ConsolePrinter {
         }
     }
 
-    public void printNumeroAlunosDasDisciplinas() {
+    public void printNumeroAlunosDasDisciplinas() throws DisciplinaNotFound {
 
         System.out.println("\nNúmero de alunos da Disciplina:");
         for (Disciplina disc : controleAcademico.getDisciplinas()) {
             System.out.println(disc.getNome());
-            System.out.println(disc.getAlunos().size() + " alunos.");
+            int quantAlunos = controleAcademico.getAlunosDaDisciplina(disc.getNome()).size();
+            System.out.println(quantAlunos + " alunos.");
             System.out.println();
         }
     }
@@ -237,7 +251,8 @@ public class ConsolePrinter {
         for (String nome : nomes) {
             disc = controleAcademico.procurarDisciplina(nome);
             System.out.println(disc.getNome());
-            System.out.println(disc.getAlunos().size() + " alunos.");
+            int quantAlunos = controleAcademico.getAlunosDaDisciplina(disc.getNome()).size();
+            System.out.println(quantAlunos + " alunos.");
         }
     }
 }
