@@ -32,7 +32,7 @@ public class Main {
             printer.printHorariosDosProfessores("Daniel");
             printer.printAlunosDasDisciplinas("ATAL","BD");
             printer.printDisciplinasDosAlunos("Maria","Matheus");
-            printer.printHorariosDosAlunos("Joseph","Maria");
+            printer.printHorariosDosAlunos("Joseph","Maria","Matheus");
             printer.printNumeroAlunosDasDisciplinas("MAP","BD");
         }
         catch (ProfessorNotFound | DisciplinaNotFound | AlunoNotFound e) {
@@ -92,15 +92,13 @@ public class Main {
         }
     }
 
-    private static void construirHorariosDosMembros(ControleAcademico controleAcademico) {
+    private static void construirHorariosDosMembros(ControleAcademico controleAcademico){
 
         // construindo horarios baseado nas disciplinas
         for (AlunoDisciplina alnDisc : controleAcademico.getRelacaoAlunoDisciplina()) {
-            alnDisc.construirHorario();
             alnDisc.acrescentarHorario();
         }
         for (ProfessorDisciplina profDisc : controleAcademico.getRelacaoProfessorDisciplina()) {
-            profDisc.construirHorario();
             profDisc.acrescentarHorario();
         }
     }

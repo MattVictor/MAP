@@ -3,6 +3,8 @@ package org.example;
 import org.example.Exceptions.AlunoNotFound;
 import org.example.Exceptions.ProfessorNotFound;
 import org.example.Exceptions.DisciplinaNotFound;
+import org.junit.function.ThrowingRunnable;
+
 import java.util.ArrayList;
 
 public class ControleAcademico {
@@ -22,8 +24,9 @@ public class ControleAcademico {
     }
 
     public void adicionarAluno(String nomeAluno){
-        alunos.add(new Aluno(nomeAluno));
+            alunos.add(new Aluno(nomeAluno));
     }
+
     public void adicionarProfessor(String nomeProfessor){
         professores.add(new Professor(nomeProfessor));
     }
@@ -102,7 +105,7 @@ public class ControleAcademico {
         ArrayList<Disciplina> disciplinas = new ArrayList<>();
 
         for (ProfessorDisciplina profDisc : RelacaoProfessorDisciplina) {
-            if (professor.equals(profDisc.getAluno())) {
+            if (professor.equals(profDisc.getProfessor())) {
                 disciplinas.add(profDisc.getDisciplina());
             }
         }

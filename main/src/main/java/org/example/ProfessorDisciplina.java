@@ -8,7 +8,7 @@ public class ProfessorDisciplina extends MembroDisciplina {
         this.professor = professor;
     }
 
-    public Professor getAluno() {
+    public Professor getProfessor() {
         return professor;
     }
 
