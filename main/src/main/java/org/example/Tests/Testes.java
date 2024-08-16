@@ -53,13 +53,12 @@ public class Testes extends TesteSetup {
         Assert.assertEquals(4, controleAcademico.getAlunosDaDisciplina(disciplina.getNome()).size());
     }
 
-//    @Test
-//    public void testarThrowAluno() throws AlunoNotFound {
-//        String nomeAluno = "Vinicius";
-//        AlunoNotFound exept = Assert.assertThrows(AlunoNotFound.class, controleAcademico.procurarAluno(nomeAluno));
-//
-//        Assert.assertEquals("Aluno Vinicius não encontrado.", exept.getMessage());
-//    }
+    @Test (expected = AlunoNotFound.class)
+    public void testarThrowAluno() throws AlunoNotFound {
+        String nomeAluno = "Vinicius";
+        controleAcademico.procurarAluno(nomeAluno);
+
+    }
 
     @Test
     public void ProfessorAlocado(){

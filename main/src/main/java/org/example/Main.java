@@ -9,6 +9,7 @@ public class Main {
     public static void main(String[] args) {
 
         ControleAcademico controleAcademico = new ControleAcademico();
+        ConsolePrinter printer = new ConsolePrinter(controleAcademico);
 
         String[] professores = {"Sabrina","Daniel","Fabio"};
         String[] alunos = {"Matheus","Maria","Joseph","Samuel"};
@@ -25,7 +26,6 @@ public class Main {
         matricularAlunos(controleAcademico);
         construirHorariosDosMembros(controleAcademico);
 
-        ConsolePrinter printer = new ConsolePrinter(controleAcademico);
 
         try {
             printer.printDisciplinasDosProfessores("Sabrina","Daniel");

@@ -24,12 +24,13 @@ public class ControleAcademico {
     }
 
     public void adicionarAluno(String nomeAluno){
-            alunos.add(new Aluno(nomeAluno));
+        alunos.add(new Aluno(nomeAluno));
     }
 
     public void adicionarProfessor(String nomeProfessor){
         professores.add(new Professor(nomeProfessor));
     }
+
     public void adicionarDisciplina(Disciplina disc, Horario hora){
         disc.setHorario(hora);
         disciplinas.add(disc);
@@ -130,9 +131,11 @@ public class ControleAcademico {
     public ArrayList<Aluno> getAlunos() {
         return alunos;
     }
+
     public ArrayList<Professor> getProfessores() {
         return professores;
     }
+
     public ArrayList<Disciplina> getDisciplinas() {
         return disciplinas;
     }
