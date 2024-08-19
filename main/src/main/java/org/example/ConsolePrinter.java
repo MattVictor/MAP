@@ -48,22 +48,29 @@ public class ConsolePrinter {
         }
     }
 
-//    public void printHorariosDosProfessores() {
-//
-//        System.out.println("\nHorarios dos professores:");
-//        for (Professor prof : controleAcademico.getProfessores()) {
-//            System.out.println(prof.getNome());
-//
-//            Horario horario = prof.getHorario();
-//            printHorario(horario);
-//        }
-//    }
+    public void printHorariosDosProfessores() throws ProfessorNotFound {
+
+        System.out.println("\nHorarios dos professores:");
+        ArrayList<Professor> nomes = controleAcademico.getProfessores();
+
+        for (Professor professor : nomes) {
+            ArrayList<ProfessorDisciplina> disciplinasDoAluno = controleAcademico.getDisciplinasDoProfessor(professor.getNome());
+
+            System.out.println("Horario do Aluno: ");
+            System.out.println(professor.getNome());
+
+            for (ProfessorDisciplina dis : disciplinasDoAluno) {
+                Horario horario = dis.getHorario();
+
+                printHorario(horario);
+            }
+        }
+    }
 
     public void printHorariosDosProfessores(String... nomes) throws ProfessorNotFound {
 
         System.out.println("\nHorarios dos professores:");
 
-        String[] hr = {"7:00","9:00","11:00","14:00","16:00","18:00","20:00"};
         for (String nome : nomes) {
             ArrayList<ProfessorDisciplina> disciplinasDoProf = controleAcademico.getDisciplinasDoProfessor(nome);
 
@@ -71,28 +78,7 @@ public class ConsolePrinter {
             for (ProfessorDisciplina dis : disciplinasDoProf) {
                 Horario horario = dis.getHorario();
 
-                int i = 0;
-                System.out.println("      Seg Ter Qua Qui Sex");
-
-                for (String[] dia : horario.getMatrizHorario()) {
-                    if(hr[i].length() < 5)
-                        System.out.print(hr[i] + "  ");
-                    else
-                        System.out.print(hr[i] + " ");
-
-                    int spacing = 4;
-
-                    for (String hora : dia) {
-                        System.out.print(hora);
-                        for(int m = 0; m < spacing-hora.length(); m++){
-                            System.out.print(" ");
-                        }
-                    }
-
-                    System.out.println();
-                    i++;
-                }
-                System.out.println();
+                printHorario(horario);
             }
         }
     }
@@ -163,24 +149,47 @@ public class ConsolePrinter {
         }
     }
 
-//    public void printHorariosDosAlunos() {
-//
-//        System.out.println("\nHorarios do Aluno:");
-//        for (Aluno aluno : controleAcademico.getAlunos()) {
-//            System.out.println(aluno.getNome());
-//
-//            Horario horario = aluno.getHorario();
-//            printHorario(horario);
-//        }
-//    }
+    public void printHorariosDosAlunos() throws AlunoNotFound {
+        ArrayList<Aluno> nomes = controleAcademico.getAlunos();
+
+        for (Aluno aluno : nomes) {
+            ArrayList<AlunoDisciplina> disciplinasDoAluno = controleAcademico.getDisciplinasDoAluno(aluno.getNome());
+
+            System.out.println("Horario do Aluno: ");
+            System.out.println(aluno.getNome());
+
+            for (AlunoDisciplina dis : disciplinasDoAluno) {
+                Horario horario = dis.getHorario();
+
+                printHorario(horario);
+            }
+        }
+    }
 
     private void printHorario(Horario horario) {
 
+        String[] hr = {"7:00","9:00","11:00","14:00","16:00","18:00","20:00"};
+
+        int i = 0;
+        System.out.println("      Seg Ter Qua Qui Sex");
+
         for (String[] dia : horario.getMatrizHorario()) {
+            if(hr[i].length() < 5)
+                System.out.print(hr[i] + "  ");
+            else
+                System.out.print(hr[i] + " ");
+
+            int spacing = 4;
+
             for (String hora : dia) {
-                System.out.print(hora + " ");
+                System.out.print(hora);
+                for(int m = 0; m < spacing-hora.length(); m++){
+                    System.out.print(" ");
+                }
             }
+
             System.out.println();
+            i++;
         }
         System.out.println();
     }
@@ -189,7 +198,6 @@ public class ConsolePrinter {
 
         System.out.println("\nHorarios do Aluno:");
 
-        String[] hr = {"7:00","9:00","11:00","14:00","16:00","18:00","20:00"};
         for (String nome : nomes) {
             ArrayList<AlunoDisciplina> disciplinasDoProf = controleAcademico.getDisciplinasDoAluno(nome);
 
@@ -197,28 +205,7 @@ public class ConsolePrinter {
             for (AlunoDisciplina dis : disciplinasDoProf) {
                 Horario horario = dis.getHorario();
 
-                int i = 0;
-                System.out.println("      Seg Ter Qua Qui Sex");
-
-                for (String[] dia : horario.getMatrizHorario()) {
-                    if(hr[i].length() < 5)
-                        System.out.print(hr[i] + "  ");
-                    else
-                        System.out.print(hr[i] + " ");
-
-                    int spacing = 4;
-
-                    for (String hora : dia) {
-                        System.out.print(hora);
-                        for(int m = 0; m < spacing-hora.length(); m++){
-                            System.out.print(" ");
-                        }
-                    }
-
-                    System.out.println();
-                    i++;
-                }
-                System.out.println();
+                printHorario(horario);
             }
         }
     }

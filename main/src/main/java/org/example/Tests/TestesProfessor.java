@@ -1,5 +1,7 @@
 package org.example.Tests;
 
+import org.example.AlunoDisciplina;
+import org.example.Exceptions.ProfessorNotFound;
 import org.example.ProfessorDisciplina;
 import org.junit.Assert;
 import org.junit.Before;
@@ -15,14 +17,25 @@ public class TestesProfessor extends TesteSetup {
     }
 
     @Test
-    public void horarioDoProfessor(){}
+    public void horarioDoProfessor(){
+        AlunoDisciplina disc = controleAcademico.getRelacaoAlunoDisciplina().getLast(); // pode dar NotFound
+
+        String[][] horario = disc.getHorario().getMatrizHorario();
+
+        Assert.assertEquals(horario[2][0], "BD");
+    }
+
+    @Test (expected = ProfessorNotFound.class)
+    public void procurarProfessor() throws ProfessorNotFound {
+        controleAcademico.procurarProfessor("Heron");
+    }
 
     @Test
-    public void procurarProfessor(){}
+    public void professorJaExiste(){
+        Assert.assertEquals(controleAcademico.getProfessores().getLast().getNome(),"Fabio");
+    }
 
     @Test
-    public void professorJaExiste(){}
-
     public void QuantidadeDeDisciplinasMinistradas(){
         ArrayList<ProfessorDisciplina> profDisc = controleAcademico.getRelacaoProfessorDisciplina();
 

@@ -17,10 +17,18 @@ public class TestesDisciplina extends TesteSetup {
     }
 
     @Test
-    public void horarioDaDisciplina(){}
+    public void horarioDaDisciplina(){
+        String[][] horario = controleAcademico.getRelacaoProfessorDisciplina().get(1).getHorario().getMatrizHorario();
+
+        Assert.assertEquals(horario[6][2],"ATAL");
+    }
 
     @Test
-    public void ProfessorDaDisciplina(){}
+    public void ProfessorDaDisciplina(){
+        ProfessorDisciplina profDisc = controleAcademico.getRelacaoProfessorDisciplina().getFirst();
+
+        Assert.assertEquals(profDisc.getProfessor().getNome(),"Sabrina");
+    }
 
     @Test
     public void testarQuantidadeDeAlunosDaDisciplina() throws DisciplinaNotFound {

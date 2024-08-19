@@ -8,7 +8,7 @@ import org.example.Exceptions.ProfessorNotFound;
 
 public class TesteSetup {
 
-    ControleAcademico controleAcademico;
+    static ControleAcademico controleAcademico;
 
     private static final String[] professores = {"Sabrina","Daniel","Fabio"};
     private static final String[] alunos = {"Matheus","Maria","Joseph","Samuel"};
@@ -21,7 +21,7 @@ public class TesteSetup {
 
     public static void config() {
 
-        ControleAcademico controleAcademico = new ControleAcademico();
+        controleAcademico = new ControleAcademico();
         ConsolePrinter printer = new ConsolePrinter(controleAcademico);
 
         adicionarDisciplinasAoControle(controleAcademico, disciplinas);
@@ -29,19 +29,6 @@ public class TesteSetup {
         alocarProfessores(controleAcademico);
         matricularAlunos(controleAcademico);
         construirHorariosDosMembros(controleAcademico);
-
-
-        try {
-            printer.printDisciplinasDosProfessores("Sabrina","Daniel");
-            printer.printHorariosDosProfessores("Daniel");
-            printer.printAlunosDasDisciplinas("ATAL","BD");
-            printer.printDisciplinasDosAlunos("Maria","Matheus");
-            printer.printHorariosDosAlunos("Joseph","Maria","Matheus");
-            printer.printNumeroAlunosDasDisciplinas("MAP","BD");
-        }
-        catch (ProfessorNotFound | DisciplinaNotFound | AlunoNotFound e) {
-            System.out.println(e.getMessage());
-        }
     }
 
     private static void adicionarMembrosAoControle(ControleAcademico controleAcademico, String[] professores, String[] alunos) {
@@ -98,12 +85,12 @@ public class TesteSetup {
 
     private static void construirHorariosDosMembros(ControleAcademico controleAcademico){
 
-//        // construindo horarios baseado nas disciplinas
-//        for (AlunoDisciplina alnDisc : controleAcademico.getRelacaoAlunoDisciplina()) {
-//            alnDisc.acrescentarHorario();
-//        }
-//        for (ProfessorDisciplina profDisc : controleAcademico.getRelacaoProfessorDisciplina()) {
-//            profDisc.acrescentarHorario();
-//        }
+        // construindo horarios baseado nas disciplinas
+        for (AlunoDisciplina alnDisc : controleAcademico.getRelacaoAlunoDisciplina()) {
+            alnDisc.acrescentarHorario();
+        }
+        for (ProfessorDisciplina profDisc : controleAcademico.getRelacaoProfessorDisciplina()) {
+            profDisc.acrescentarHorario();
+        }
     }
 }
