@@ -10,32 +10,33 @@ public class TesteSetup {
 
     ControleAcademico controleAcademico;
 
-    public void config() {
-        controleAcademico = new ControleAcademico();
+    private static final String[] professores = {"Sabrina","Daniel","Fabio"};
+    private static final String[] alunos = {"Matheus","Maria","Joseph","Samuel"};
+    private static final String[] disciplinas = {"MAP","ATAL","BD"};
+    private static final String[] horarios = {
+            "T,F,F,F,F,T,F/F,F,F,T,F,F,F/F,F,F,F,F,F,F/F,F,F,F,T,F,F/F,F,F,F,F,T,F",
+            "F,T,F,F,F,F,T/F,F,F,F,F,F,F/F,F,F,F,F,T,T/F,F,F,F,F,F,F/F,T,F,F,F,F,F",
+            "F,F,T,F,T,F,F/F,T,F,F,F,F,F/F,F,F,F,F,F,F/F,T,F,F,F,F,F/F,F,T,F,F,F,F"
+    };
 
-        String[] professores = {"Sabrina","Daniel","Fabio"};
-        String[] alunos = {"Matheus","Maria","Joseph","Samuel"};
-        String[] disciplinas = {"MAP","ATAL","BD"};
-        String[] horarios = {
-                "T,F,F,F,F,T,F/F,F,F,T,F,F,F/F,F,F,F,F,F,F/F,F,F,F,T,F,F/F,F,F,F,F,T,F",
-                "F,T,F,F,F,F,T/F,F,F,F,F,F,F/F,F,F,F,F,T,T/F,F,F,F,F,F,F/F,T,F,F,F,F,F",
-                "F,F,T,F,T,F,F/F,T,F,F,F,F,F/F,F,F,F,F,F,F/F,T,F,F,F,F,F/F,F,T,F,F,F,F"
-        };
+    public static void config() {
 
-        adicionarDisciplinasAoControle(controleAcademico, disciplinas, horarios);
+        ControleAcademico controleAcademico = new ControleAcademico();
+        ConsolePrinter printer = new ConsolePrinter(controleAcademico);
+
+        adicionarDisciplinasAoControle(controleAcademico, disciplinas);
         adicionarMembrosAoControle(controleAcademico, professores, alunos);
         alocarProfessores(controleAcademico);
         matricularAlunos(controleAcademico);
         construirHorariosDosMembros(controleAcademico);
 
-        ConsolePrinter printer = new ConsolePrinter(controleAcademico);
 
         try {
             printer.printDisciplinasDosProfessores("Sabrina","Daniel");
             printer.printHorariosDosProfessores("Daniel");
             printer.printAlunosDasDisciplinas("ATAL","BD");
             printer.printDisciplinasDosAlunos("Maria","Matheus");
-            printer.printHorariosDosAlunos("Joseph","Maria");
+            printer.printHorariosDosAlunos("Joseph","Maria","Matheus");
             printer.printNumeroAlunosDasDisciplinas("MAP","BD");
         }
         catch (ProfessorNotFound | DisciplinaNotFound | AlunoNotFound e) {
@@ -56,11 +57,11 @@ public class TesteSetup {
         }
     }
 
-    private static void adicionarDisciplinasAoControle(ControleAcademico controleAcademico, String[] disciplinas, String[] horarios) {
+    private static void adicionarDisciplinasAoControle(ControleAcademico controleAcademico, String[] disciplinas) {
 
         // adicionando disciplinas ao controle
         for (int i = 0; i < disciplinas.length; i++) {
-            controleAcademico.adicionarDisciplina(new Disciplina(disciplinas[i]), new Horario(horarios[i], disciplinas[i]));
+            controleAcademico.adicionarDisciplina(disciplinas[i]);
         }
     }
 
@@ -68,9 +69,9 @@ public class TesteSetup {
 
         // alocando professores às suas disciplinas
         try {
-            controleAcademico.alocarProfessor("Sabrina", "MAP");
-            controleAcademico.alocarProfessor("Daniel","ATAL");
-            controleAcademico.alocarProfessor("Fabio","BD");
+            controleAcademico.alocarProfessor("Sabrina", "MAP",horarios[0]);
+            controleAcademico.alocarProfessor("Daniel","ATAL",horarios[1]);
+            controleAcademico.alocarProfessor("Fabio","BD",horarios[2]);
         }
         catch (ProfessorNotFound | DisciplinaNotFound e) {
             System.out.println(e.getMessage());
@@ -81,30 +82,28 @@ public class TesteSetup {
 
         // matriculando alunos às suas disciplinas
         try {
-            controleAcademico.matricularAluno("Matheus","MAP");
-            controleAcademico.matricularAluno("Maria","MAP");
-            controleAcademico.matricularAluno("Joseph","MAP");
-            controleAcademico.matricularAluno("Samuel","MAP");
-            controleAcademico.matricularAluno("Matheus","ATAL");
-            controleAcademico.matricularAluno("Joseph","BD");
-            controleAcademico.matricularAluno("Samuel","ATAL");
-            controleAcademico.matricularAluno("Maria","BD");
+            controleAcademico.matricularAluno("Matheus","MAP",horarios[0]);
+            controleAcademico.matricularAluno("Maria","MAP",horarios[0]);
+            controleAcademico.matricularAluno("Joseph","MAP",horarios[0]);
+            controleAcademico.matricularAluno("Samuel","MAP",horarios[0]);
+            controleAcademico.matricularAluno("Matheus","ATAL",horarios[1]);
+            controleAcademico.matricularAluno("Joseph","BD",horarios[2]);
+            controleAcademico.matricularAluno("Samuel","ATAL",horarios[1]);
+            controleAcademico.matricularAluno("Maria","BD",horarios[2]);
         }
         catch (AlunoNotFound | DisciplinaNotFound e) {
             System.out.println(e.getMessage());
         }
     }
 
-    private static void construirHorariosDosMembros(ControleAcademico controleAcademico) {
+    private static void construirHorariosDosMembros(ControleAcademico controleAcademico){
 
-        // construindo horarios baseado nas disciplinas
-        for (AlunoDisciplina alnDisc : controleAcademico.getRelacaoAlunoDisciplina()) {
-            alnDisc.construirHorario();
-            alnDisc.acrescentarHorario();
-        }
-        for (ProfessorDisciplina profDisc : controleAcademico.getRelacaoProfessorDisciplina()) {
-            profDisc.construirHorario();
-            profDisc.acrescentarHorario();
-        }
+//        // construindo horarios baseado nas disciplinas
+//        for (AlunoDisciplina alnDisc : controleAcademico.getRelacaoAlunoDisciplina()) {
+//            alnDisc.acrescentarHorario();
+//        }
+//        for (ProfessorDisciplina profDisc : controleAcademico.getRelacaoProfessorDisciplina()) {
+//            profDisc.acrescentarHorario();
+//        }
     }
 }

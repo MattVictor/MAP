@@ -3,8 +3,8 @@ package org.example;
 public class AlunoDisciplina extends MembroDisciplina {
     private Aluno aluno;
 
-    public AlunoDisciplina(Aluno aluno, Disciplina disciplina) {
-        super(disciplina);
+    public AlunoDisciplina(Aluno aluno, Disciplina disciplina, String horaDaDisc) {
+        super(disciplina,horaDaDisc);
         this.aluno = aluno;
     }
 
@@ -17,6 +17,6 @@ public class AlunoDisciplina extends MembroDisciplina {
     }
 
     public void acrescentarHorario() {
-        aluno.setHorario(construirHorario());
+        this.setHorario(construirHorario());
     }
 }

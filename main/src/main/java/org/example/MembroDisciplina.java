@@ -6,8 +6,11 @@ public abstract class MembroDisciplina {
 
     private Disciplina disciplina;
 
-    public MembroDisciplina(Disciplina disciplina) {
+    private Horario horario;
+
+    public MembroDisciplina(Disciplina disciplina, String hora) {
         this.disciplina = disciplina;
+        this.horario = new Horario(hora,disciplina.getNome());
     }
 
     public Disciplina getDisciplina() {
@@ -24,7 +27,7 @@ public abstract class MembroDisciplina {
 
         // fazendo um "or" em todas os horarios das disciplinas
 
-        Horario horarioDaDisc = disciplina.getHorario();
+        Horario horarioDaDisc = horario;
 
         for (int i = 0; i < 7; i++) {
             for (int j = 0; j < 5; j++) {
@@ -40,5 +43,13 @@ public abstract class MembroDisciplina {
         return new Horario(construtorDoHorario);
     }
 
+    public Horario getHorario(){
+        return this.horario;
+    }
+
     public abstract void acrescentarHorario();
+
+    protected void setHorario(Horario horario) {
+        this.horario = horario;
+    }
 }

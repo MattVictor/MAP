@@ -23,7 +23,7 @@ public class ControleAcademico {
         RelacaoProfessorDisciplina = new ArrayList<>();
     }
 
-    public void adicionarAluno(String nomeAluno){
+    public void adicionarAluno(String nomeAluno) {
         alunos.add(new Aluno(nomeAluno));
     }
 
@@ -31,29 +31,28 @@ public class ControleAcademico {
         professores.add(new Professor(nomeProfessor));
     }
 
-    public void adicionarDisciplina(Disciplina disc, Horario hora){
-        disc.setHorario(hora);
+    public void adicionarDisciplina(String nomeDaDisc){
+        Disciplina disc = new Disciplina(nomeDaDisc);
         disciplinas.add(disc);
     }
 
-    public void matricularAluno(String nomeAluno, String nomeDisciplina) throws AlunoNotFound, DisciplinaNotFound {
-
+    public void matricularAluno(String nomeAluno, String nomeDisciplina, String horaDaDisc) throws AlunoNotFound, DisciplinaNotFound {
         // procurar aluno e disciplina
         Aluno aluno = procurarAluno(nomeAluno);
         Disciplina disc = procurarDisciplina(nomeDisciplina);
 
         // relacionar aluno e disciplina
-        RelacaoAlunoDisciplina.add(new AlunoDisciplina(aluno,disc));
+        RelacaoAlunoDisciplina.add(new AlunoDisciplina(aluno,disc,horaDaDisc));
     }
 
-    public void alocarProfessor(String nomeProfessor, String nomeDisciplina) throws ProfessorNotFound, DisciplinaNotFound {
+    public void alocarProfessor(String nomeProfessor, String nomeDisciplina, String horaDaDisc) throws ProfessorNotFound, DisciplinaNotFound {
 
         // procurar professor e disciplina
         Professor prof = procurarProfessor(nomeProfessor);
         Disciplina disc = procurarDisciplina(nomeDisciplina);
 
         // relacionar professor e disciplina
-        RelacaoProfessorDisciplina.add(new ProfessorDisciplina(prof,disc));
+        RelacaoProfessorDisciplina.add(new ProfessorDisciplina(prof,disc,horaDaDisc));
     }
 
     public Professor procurarProfessor(String nomeProfessor) throws ProfessorNotFound {
@@ -86,28 +85,28 @@ public class ControleAcademico {
         throw new AlunoNotFound("Aluno " + nomeAluno + " nao encontrado.");
     }
 
-    public ArrayList<Disciplina> getDisciplinasDoAluno(String nomeAluno) throws AlunoNotFound {
+    public ArrayList<AlunoDisciplina> getDisciplinasDoAluno(String nomeAluno) throws AlunoNotFound {
 
         Aluno aluno = procurarAluno(nomeAluno);
-        ArrayList<Disciplina> disciplinas = new ArrayList<>();
+        ArrayList<AlunoDisciplina> disciplinas = new ArrayList<>();
 
         for (AlunoDisciplina alunoDisc : RelacaoAlunoDisciplina) {
             if (aluno.equals(alunoDisc.getAluno())) {
-                disciplinas.add(alunoDisc.getDisciplina());
+                disciplinas.add(alunoDisc);
             }
         }
 
         return disciplinas;
     }
 
-    public ArrayList<Disciplina> getDisciplinasDoProfessor(String nomeProfessor) throws ProfessorNotFound {
+    public ArrayList<ProfessorDisciplina> getDisciplinasDoProfessor(String nomeProfessor) throws ProfessorNotFound {
 
         Professor professor = procurarProfessor(nomeProfessor);
-        ArrayList<Disciplina> disciplinas = new ArrayList<>();
+        ArrayList<ProfessorDisciplina> disciplinas = new ArrayList<>();
 
         for (ProfessorDisciplina profDisc : RelacaoProfessorDisciplina) {
             if (professor.equals(profDisc.getProfessor())) {
-                disciplinas.add(profDisc.getDisciplina());
+                disciplinas.add(profDisc);
             }
         }
 
